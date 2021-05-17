@@ -7,9 +7,8 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.sql.SQLOutput;
+import java.util.*;
 
 /**
  * Created by LaunchCode
@@ -124,5 +123,24 @@ public class JobData {
             e.printStackTrace();
         }
     }
+    public static ArrayList<HashMap<String, String>> findByValue(String mySearchTerm) {
 
+        // load data, if not already loaded
+        loadData();
+
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+
+        for (HashMap<String, String> jobEntry : allJobs) {
+            for (Map.Entry<String, String> job: jobEntry.entrySet()) {
+                String searchTerm = job.getValue();
+                mySearchTerm = mySearchTerm.toLowerCase();
+                if(searchTerm.toLowerCase().contains(mySearchTerm)){
+                    jobs.add(jobEntry);
+                }
+            }
+
+         }
+
+        return jobs;
+    }
 }
